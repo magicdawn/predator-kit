@@ -9,6 +9,7 @@ var glob = require('glob');
 var Promise = require('bluebird');
 var co = require('co');
 var swig = require('swig');
+var browserify = require('browserify');
 
 /**
  * set swig view cache
@@ -22,7 +23,6 @@ swig.setDefaults({
  */
 exports = module.exports = Predator;
 var less = exports.less = require('./less');
-var browserify = exports.browserify = require('./browserify');
 
 /**
  * Preadtor class def
@@ -100,13 +100,37 @@ Predator.prototype.renderLessAsync = co.wrap(function * (file) {
 });
 
 /**
- * js 生成器
+ * for js middleware use
  */
-Predator.prototype.renderJsAsync = co.wrap(function * (file) {
+Predator.prototype.createBrowserifyStream = function(file) {
   if (!this.jsGlobals) {
-    this.jsGlobals = require(this.home + '/' + 'app/global/index.json');
+    this.jsGlobals = require(this.home + '/' + 'app/global/js/index.json');
   }
-});
+
+  // global
+  if (file === this.home + '/app/global/js/main/index.js') {
+    var b = browserify({
+      basedir: pathFn.dirname(file)
+    });
+
+    this.jsGlobals.forEach(function(item) {
+      b.require(item.require, {
+        expose: item.expose
+      });
+    });
+    return b.bundle();
+  }
+
+  // normal js
+  var b = browserify(file, {
+    basedir: pathFn.dirname(file)
+  });
+
+  this.jsGlobals.forEach(function(item) {
+    b.external(item.expose);
+  });
+  return b.bundle();
+};
 
 /**
  * get render for context
