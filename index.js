@@ -108,13 +108,17 @@ Predator.prototype.renderLessAsync = co.wrap(function * (file) {
 
 Predator.prototype.createBrowserify = function(file) {
   if (!this.jsGlobals) {
-    this.jsGlobals = require(this.home + '/' + 'app/global/js/index.json');
+    this.jsGlobals = require(this.home + '/' + 'app/global/js/main/index.json');
   }
 
+  // when not production, enable source maps
+  var env = process.env.NODE_ENV;
+
   // global
-  if (file === this.home + '/app/global/js/index.js') {
+  if (file === this.home + '/app/global/js/main/index.js') {
     var b = browserify({
-      basedir: pathFn.dirname(file)
+      basedir: pathFn.dirname(file),
+      debug: env !== 'production'
     });
 
     this.jsGlobals.forEach(function(item) {
@@ -127,7 +131,8 @@ Predator.prototype.createBrowserify = function(file) {
 
   // normal js
   var b = browserify(file, {
-    basedir: pathFn.dirname(file)
+    basedir: pathFn.dirname(file),
+    debug: env !== 'production'
   });
 
   this.jsGlobals.forEach(function(item) {
@@ -138,7 +143,7 @@ Predator.prototype.createBrowserify = function(file) {
 
 
 Predator.prototype.createBrowserifyStream = function(file) {
-  return this.createBrowserify().bundle();
+  return this.createBrowserify(file).bundle();
 };
 
 /**

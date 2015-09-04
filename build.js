@@ -123,8 +123,8 @@ exports.buildJsAsync = co.wrap(function * (globPatterns, rev) {
 
     for (var j = 0; j < files.length; j++) {
       var f = files[j];
-      if (f === 'global/js/index.json') { // hack on global js
-        f = 'global/js/index.js'
+      if (f === 'global/js/main/index.json') { // hack on global js
+        f = 'global/js/main/index.js'
       }
       var original = f;
 
