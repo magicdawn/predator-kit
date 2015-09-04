@@ -98,7 +98,9 @@ Predator.prototype.renderLessAsync = co.wrap(function * (file) {
       sourceMap: null
     });
   } else {
-    return yield less.renderFileAsync(file);
+    return yield less.renderFileAsync(file, {
+      compress: true
+    });
   }
 });
 
