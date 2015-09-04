@@ -1,0 +1,26 @@
+{
+  "name": "predator-kit",
+  "version": "0.0.1",
+  "description": "Basic lib for predator style FE project",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/magicdawn/predator-kit.git"
+  },
+  "keywords": [
+    "predator",
+    "fe",
+    "front-end",
+    "browserify",
+    "less"
+  ],
+  "author": "magicdawn",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/magicdawn/predator-kit/issues"
+  },
+  "homepage": "https://github.com/magicdawn/predator-kit#readme"
+}
