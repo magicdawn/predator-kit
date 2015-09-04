@@ -1,13 +1,13 @@
 /**
  * module dependencies
  */
+global.Promise = require('bluebird');
+var co = require('co');
 var pathFn = require('path');
 var fs = require('fs');
 var _ = require('lodash');
 var send = require('koa-send');
 var glob = require('glob');
-var Promise = require('bluebird');
-var co = require('co');
 var swig = require('swig');
 var browserify = require('browserify');
 
@@ -15,7 +15,7 @@ var browserify = require('browserify');
  * set swig view cache
  */
 swig.setDefaults({
-  cache: process.env.NODE_ENV === 'production' && 'momory'
+  cache: process.env.NODE_ENV === 'production' && 'memory'
 });
 
 /**
@@ -49,6 +49,9 @@ function Predator(options) {
 
   // rouetr 
   this.router = options.router;
+
+  // build 目录
+  this.buildDir = pathFn.resolve(options.buildDir || './public');
 }
 
 /**
@@ -102,13 +105,14 @@ Predator.prototype.renderLessAsync = co.wrap(function * (file) {
 /**
  * for js middleware use
  */
-Predator.prototype.createBrowserifyStream = function(file) {
+
+Predator.prototype.createBrowserify = function(file) {
   if (!this.jsGlobals) {
     this.jsGlobals = require(this.home + '/' + 'app/global/js/index.json');
   }
 
   // global
-  if (file === this.home + '/app/global/js/main/index.js') {
+  if (file === this.home + '/app/global/js/index.js') {
     var b = browserify({
       basedir: pathFn.dirname(file)
     });
@@ -118,7 +122,7 @@ Predator.prototype.createBrowserifyStream = function(file) {
         expose: item.expose
       });
     });
-    return b.bundle();
+    return b;
   }
 
   // normal js
@@ -129,7 +133,12 @@ Predator.prototype.createBrowserifyStream = function(file) {
   this.jsGlobals.forEach(function(item) {
     b.external(item.expose);
   });
-  return b.bundle();
+  return b;
+};
+
+
+Predator.prototype.createBrowserifyStream = function(file) {
+  return this.createBrowserify().bundle();
 };
 
 /**
@@ -167,3 +176,9 @@ Predator.getRender = function(dir) {
     });
   }
 };
+
+/**
+ * load build actions
+ */
+var build = require('./build');
+_.assign(Predator.prototype, build);
