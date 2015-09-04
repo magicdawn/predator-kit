@@ -13,6 +13,7 @@ var mkdirpSync = require('mkdirp').sync;
 var co = require('co');
 var path = require('path');
 var fs = require('fs');
+var UglifyJs = require('uglify-js');
 
 /**
  * 只复制
@@ -130,9 +131,20 @@ exports.buildJsAsync = co.wrap(function * (globPatterns, rev) {
 
       // build hash
       var src = self.home + '/app/' + f;
+
+      // bundle
       var b = self.createBrowserify(src);
       var content = (yield b.bundleAsync()).toString('utf8');
+
+      // process rev
       content = util.processRev(content, rev);
+
+      // minify
+      content = UglifyJs.minify(content, {
+        fromString: true
+      }).code;
+
+      // do rev
       var hash = Hash.string(content);
       var parsed = path.parse(original);
       var hashed = fmt('%s/%s_%s%s', parsed.dir, parsed.name, hash, '.js');
