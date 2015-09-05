@@ -13,13 +13,6 @@ exports.renderFileAsync = co.wrap(function * (file, options) {
 
   // set default options
   options = merge({
-    sourceMap: {
-      sourceMapFileInline: true
-    },
-    paths: [
-      '.',
-      pathFn.join(__dirname, '../app')
-    ],
     filename: file
   }, options);
 

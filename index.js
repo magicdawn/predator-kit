@@ -10,6 +10,7 @@ var send = require('koa-send');
 var glob = require('glob');
 var swig = require('swig');
 var browserify = require('browserify');
+var stringify = require('stringify');
 
 /**
  * set swig view cache
@@ -93,12 +94,21 @@ Predator.prototype.loadAllRouter = function() {
  */
 Predator.prototype.renderLessAsync = co.wrap(function * (file) {
   var env = process.env.NODE_ENV;
+  var paths = [
+    '.',
+    pathFn.join(this.home, 'app')
+  ];
+
   if (env === 'production') {
     return yield less.renderFileAsync(file, {
-      sourceMap: null
+      paths: paths
     });
   } else {
     return yield less.renderFileAsync(file, {
+      sourceMap: {
+        sourceMapFileInline: true
+      },
+      paths: paths,
       compress: true
     });
   }
@@ -116,9 +126,12 @@ Predator.prototype.createBrowserify = function(file) {
   // when not production, enable source maps
   var env = process.env.NODE_ENV;
 
+  // b as ret
+  var b;
+
   // global
   if (file === this.home + '/app/global/js/main/index.js') {
-    var b = browserify({
+    b = browserify({
       basedir: pathFn.dirname(file),
       debug: env !== 'production'
     });
@@ -128,24 +141,88 @@ Predator.prototype.createBrowserify = function(file) {
         expose: item.expose
       });
     });
-    return b;
+  } else {
+
+    // normal js
+    b = browserify(file, {
+      basedir: pathFn.dirname(file),
+      debug: env !== 'production'
+    });
+
+
+    this.jsGlobals.forEach(function(item) {
+      b.external(item.expose);
+    });
   }
 
-  // normal js
-  var b = browserify(file, {
-    basedir: pathFn.dirname(file),
-    debug: env !== 'production'
-  });
+  // commom operation
+  b.transform(stringify({
+    extensions: ['.html', '.swig', 'tpl', '.txt']
+  }));
 
-  this.jsGlobals.forEach(function(item) {
-    b.external(item.expose);
-  });
+  // ret
   return b;
 };
 
 
+/**
+ * use for js dev env
+ */
 Predator.prototype.createBrowserifyStream = function(file) {
   return this.createBrowserify(file).bundle();
+};
+
+
+/**
+ * development assets manager
+ */
+Predator.prototype.startAssetsManager = function() {
+  var router = this.router;
+  var predator = this;
+  var home = this.home;
+
+  /**
+   * img fonts assets
+   */
+  router.use('/:component/fonts', predator.static());
+  router.use('/:component/assets', predator.static());
+  router.use('/:component/img', predator.static());
+
+  /**
+   * less
+   *
+   * only `css/main/*.css` should be handled via less
+   */
+  router.get('/:component/css/:css+.css', function * (next) {
+    if (_.startsWith(this.params.css, 'main/')) {
+      var appHome = pathFn.join(home, 'app');
+      var parsed = pathFn.parse(this.originalPath);
+      var lessFile = pathFn.join(appHome, parsed.dir, parsed.name + '.less');
+      debug('css -> less : %s -> %s', this.path, lessFile);
+
+      this.type = 'css';
+      this.body = yield predator.renderLessAsync(lessFile);
+    } else {
+      yield * next;
+    }
+  }, predator.static());
+
+  /**
+   * js
+   *
+   * only `js/main/*.js` should be handled via browserify
+   */
+  router.get('/:component/js/:js+.js', function * (next) {
+    if (_.startsWith(this.params.js, 'main/')) {
+      var appHome = pathFn.join(home, 'app');
+      var parsed = pathFn.parse(this.originalPath);
+      var jsFile = pathFn.join(appHome, parsed.dir, parsed.name + parsed.ext);
+      this.type = 'js';
+      this.body = predator.createBrowserifyStream(jsFile); // stream
+    } else {
+      yield * next;
+    }
+  }, predator.static());
 };
 
 /**
