@@ -246,6 +246,12 @@ Predator.getRender = function(dir) {
   // render
   return function redner(view, locals) {
     return new Promise(function(resolve, reject) {
+
+      // fix, 在js 中 yield render('../../global/view/error') case
+      if (env === 'production') {
+        view = view.replace(/\/view(?=\/)/g, '/view_build');
+      }
+
       view = pathFn.join(base, view);
       if (!pathFn.extname(view)) {
         view += '.swig';
