@@ -177,11 +177,43 @@ exports.buildView = function(globPatterns, rev) {
       content = util.processRev(content, rev);
       content = content.replace(/\/view(?=\/)/g, '/view_build');
 
-
       // write file
       var dest = file.replace(/\/view(?=\/)/, '/view_build');
       debug('%s -> %s', file, dest);
       fse.outputFileSync(dest, content, 'utf8');
     })
+  });
+};
+
+/**
+ * 不带 main 的 js/css
+ *
+ */
+exports.buildOtherJsCss = function(globPatterns, rev) {
+  var cwd = this.home + '/app';
+  var self = this;
+  var debug = require('debug')('predator:build:buildOtherJsCss');
+
+  globPatterns.forEach(function(pattern) {
+    var files = glob.sync(pattern, {
+      cwd: cwd
+    });
+
+    files.forEach(function(f) {
+      // do rev
+      var original = f;
+      var src = cwd + '/' + f;
+      var content = fs.readFileSync(src, 'utf8');
+      content = util.processRev(content, rev);
+      var hash = Hash.string(content);
+      var parsed = path.parse(original);
+      var hashed = fmt('%s/%s_%s%s', parsed.dir, parsed.name, hash, parsed.ext);
+      rev[original] = hashed;
+      debug('%s -> %s', original, hashed);
+
+      // write file
+      var dest = self.buildDir + '/' + hashed;
+      fse.outputFileSync(dest, content);
+    });
   });
 };
