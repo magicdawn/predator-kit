@@ -9,9 +9,8 @@
  */
 
 var fs = require('fs');
+var fse = require('fs-extra');
 var path = require('path');
-var mkdirp = require('mkdirp');
-var mkdirpSync = mkdirp.sync;
 var Promise = require('bluebird');
 var crypto = require('crypto');
 var escapeRegexp = require('escape-regexp');
@@ -23,32 +22,6 @@ var _ = require('lodash');
  * browseridy bundle(function(err,res){  })
  */
 Browserify.prototype.bundleAsync = Promise.promisify(Browserify.prototype.bundle);
-
-/**
- * copy
- */
-
-exports.copy = function(src, dest) {
-  src = path.resolve(src);
-  dest = path.resolve(dest);
-
-  if (!fs.existsSync(src)) {
-    console.warn('copy none exists: %s', src);
-    return;
-  }
-
-  // guard dir
-  exports.ensureDir(dest);
-
-  // stream
-  return new Promise(function(resolve, reject) {
-    fs.createReadStream(src)
-      .on('error', reject)
-      .pipe(fs.createWriteStream(dest))
-      .on('error', reject)
-      .on('finish', resolve);
-  });
-};
 
 /**
  * get md5 of content
@@ -96,17 +69,4 @@ exports.processRev = function(content, rev) {
   });
 
   return content;
-};
-
-/**
- * 保证文件夹存在
- */
-exports.ensureDir = function(dir) {
-  if (path.extname(dir)) {
-    dir = path.dirname(dir);
-  }
-
-  if (!fs.existsSync(dir)) {
-    mkdirpSync(dir);
-  }
 };

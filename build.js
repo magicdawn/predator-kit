@@ -9,10 +9,10 @@ var glob = require('glob');
 var util = require('./util');
 var Hash = util.Hash;
 var fmt = require('util').format;
-var mkdirpSync = require('mkdirp').sync;
 var co = require('co');
 var path = require('path');
 var fs = require('fs');
+var fse = require('fs-extra');
 var UglifyJs = require('uglify-js');
 
 /**
@@ -65,8 +65,7 @@ exports.buildStatic = function(globPatterns, rev) {
 
       // write file
       var dest = self.buildDir + '/' + hashed;
-      util.ensureDir(dest);
-      util.copy(src, dest);
+      fse.copySync(src, dest);
     });
   });
 };
@@ -103,8 +102,7 @@ exports.buildLessAsync = co.wrap(function * (globPatterns, rev) {
 
       // write file
       var dest = self.buildDir + '/' + hashed;
-      util.ensureDir(dest);
-      fs.writeFileSync(dest, content, 'utf8');
+      fse.outputFileSync(dest, content);
     };
   };
 });
@@ -153,8 +151,7 @@ exports.buildJsAsync = co.wrap(function * (globPatterns, rev) {
 
       // write file
       var dest = self.buildDir + '/' + hashed;
-      util.ensureDir(dest);
-      fs.writeFileSync(dest, content, 'utf8');
+      fse.outputFileSync(dest, content, 'utf8');
     }
   }
 });
@@ -184,8 +181,7 @@ exports.buildView = function(globPatterns, rev) {
       // write file
       var dest = file.replace(/\/view(?=\/)/, '/view_build');
       debug('%s -> %s', file, dest);
-      util.ensureDir(dest);
-      fs.writeFileSync(dest, content, 'utf8');
+      fse.outputFileSync(dest, content, 'utf8');
     })
   });
 };
