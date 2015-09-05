@@ -33,7 +33,7 @@ exports.buildCopy = function(globPatterns) {
       var dest = self.buildDir + '/' + f;
 
       debug('copy %s -> %s', src, dest);
-      util.copy(src, dest);
+      fse.copySync(src, dest);
     });
   });
 };
@@ -88,14 +88,17 @@ exports.buildLessAsync = co.wrap(function * (globPatterns, rev) {
 
     for (var j = 0; j < files.length; j++) {
       var f = files[j];
-      var original = f;
 
       // build hash
       var src = self.home + '/app/' + f;
       var content = yield self.renderLessAsync(src);
       content = util.processRev(content, rev);
       var hash = Hash.string(content);
-      var parsed = path.parse(original);
+
+      // f是文件, .less
+      // original -> hashed, original 应为请求的css地址
+      var parsed = path.parse(f);
+      var original = fmt('%s/%s%s', parsed.dir, parsed.name, '.css');
       var hashed = fmt('%s/%s_%s%s', parsed.dir, parsed.name, hash, '.css');
       debug('%s -> %s', original, hashed);
       rev[original] = hashed;
