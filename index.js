@@ -180,6 +180,7 @@ Predator.prototype.startAssetsManager = function() {
   var router = this.router;
   var predator = this;
   var home = this.home;
+  var debug = require('debug')('predator:middleware');
 
   /**
    * img fonts assets
