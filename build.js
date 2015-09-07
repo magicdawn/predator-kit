@@ -14,6 +14,8 @@ var path = require('path');
 var fs = require('fs');
 var fse = require('fs-extra');
 var UglifyJs = require('uglify-js');
+var request = require('needle-kit').request;
+var minify = require('html-minifier').minify;
 
 /**
  * 只复制
@@ -220,3 +222,31 @@ exports.buildOtherJsCss = function(globPatterns, rev) {
     });
   });
 };
+
+/**
+ * build static html
+ */
+exports.buildHtmlAsync = co.wrap(function * (path, options) {
+  if (this._server) {
+    this._server = app.listen();
+  }
+
+  var address = this._server.address();
+  this._serverAddress = address.address + ':' + address.port;
+
+  var html = yield request
+    .get(this._serverAddress + path)
+    .promise();
+
+  // options
+  var defaults = {};
+  options = _.merge(defaults,options);
+  var html = minify(html,options);
+
+  // dest
+  var dest = this.buildDir + path;
+  if(!path.extname(dest)){
+    dest += 'index.html'
+  };
+  fse.outputFileSync(dest,html);
+});
