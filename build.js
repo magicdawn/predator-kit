@@ -1,3 +1,4 @@
+'use strict';
 /**
  * build operation for Predator
  */
@@ -16,6 +17,7 @@ var fse = require('fs-extra');
 var UglifyJs = require('uglify-js');
 var request = require('needle-kit').request;
 var minify = require('html-minifier').minify;
+var _ = require('lodash');
 
 /**
  * 只复制
@@ -77,7 +79,7 @@ exports.buildStatic = function(globPatterns, rev) {
  *
  * 处理less, 替换图片资源等
  */
-exports.buildLessAsync = co.wrap(function * (globPatterns, rev) {
+exports.buildLessAsync = co.wrap(function*(globPatterns, rev) {
   var self = this;
   var cwd = this.home + '/app';
   var debug = require('debug')('predator:build:buildLessAsync');
@@ -108,12 +110,12 @@ exports.buildLessAsync = co.wrap(function * (globPatterns, rev) {
       // write file
       var dest = self.buildDir + '/' + hashed;
       fse.outputFileSync(dest, content);
-    };
-  };
+    }
+  }
 });
 
 
-exports.buildJsAsync = co.wrap(function * (globPatterns, rev) {
+exports.buildJsAsync = co.wrap(function*(globPatterns, rev) {
   var self = this;
   var cwd = this.home + '/app';
   var debug = require('debug')('predator:build:buildJsAsync');
@@ -128,7 +130,7 @@ exports.buildJsAsync = co.wrap(function * (globPatterns, rev) {
     for (var j = 0; j < files.length; j++) {
       var f = files[j];
       if (f === 'global/js/main/index.json') { // hack on global js
-        f = 'global/js/main/index.js'
+        f = 'global/js/main/index.js';
       }
       var original = f;
 
@@ -186,7 +188,7 @@ exports.buildView = function(globPatterns, rev) {
       var dest = file.replace(/\/view(?=\/)/, '/view_build');
       debug('%s -> %s', file, dest);
       fse.outputFileSync(dest, content, 'utf8');
-    })
+    });
   });
 };
 
@@ -226,9 +228,9 @@ exports.buildOtherJsCss = function(globPatterns, rev) {
 /**
  * build static html
  */
-exports.buildHtmlAsync = co.wrap(function * (path, options) {
+exports.buildHtmlAsync = co.wrap(function*(path, options) {
   if (this._server) {
-    this._server = app.listen();
+    this._server = this.app.listen();
   }
 
   var address = this._server.address();
@@ -236,17 +238,18 @@ exports.buildHtmlAsync = co.wrap(function * (path, options) {
 
   var html = yield request
     .get(this._serverAddress + path)
-    .promise();
+    .promise()
+    .end();
 
   // options
   var defaults = {};
-  options = _.merge(defaults,options);
-  var html = minify(html,options);
+  options = _.merge(defaults, options);
+  var html = minify(html, options);
 
   // dest
   var dest = this.buildDir + path;
-  if(!path.extname(dest)){
-    dest += 'index.html'
-  };
-  fse.outputFileSync(dest,html);
+  if (!path.extname(dest)) {
+    dest += 'index.html';
+  }
+  fse.outputFileSync(dest, html);
 });

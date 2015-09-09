@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * module dependencies
  */
@@ -48,7 +50,7 @@ function Predator(options) {
   // app
   this.app = options.app;
 
-  // rouetr 
+  // rouetr
   this.router = options.router;
 
   // build 目录
@@ -66,11 +68,11 @@ Predator.prototype.static = function() {
   var self = this;
   var root = pathFn.join(this.home, 'app');
 
-  return function * predatorStatic(next) {
+  return function* predatorStatic(next) {
     return yield send(this, this.originalPath, {
       root: root
     });
-  }
+  };
 };
 
 /**
@@ -92,7 +94,7 @@ Predator.prototype.loadAllRouter = function() {
 /**
  * less生成器
  */
-Predator.prototype.renderLessAsync = co.wrap(function * (file) {
+Predator.prototype.renderLessAsync = co.wrap(function*(file) {
   var env = process.env.NODE_ENV;
   var paths = [
     '.',
@@ -194,7 +196,7 @@ Predator.prototype.startAssetsManager = function() {
    *
    * only `css/main/*.css` should be handled via less
    */
-  router.get('/:component/css/:css+.css', function * (next) {
+  router.get('/:component/css/:css+.css', function*(next) {
     if (_.startsWith(this.params.css, 'main/')) {
       var appHome = pathFn.join(home, 'app');
       var parsed = pathFn.parse(this.originalPath);
@@ -213,7 +215,7 @@ Predator.prototype.startAssetsManager = function() {
    *
    * only `js/main/*.js` should be handled via browserify
    */
-  router.get('/:component/js/:js+.js', function * (next) {
+  router.get('/:component/js/:js+.js', function*(next) {
     if (_.startsWith(this.params.js, 'main/')) {
       var appHome = pathFn.join(home, 'app');
       var parsed = pathFn.parse(this.originalPath);
@@ -265,7 +267,7 @@ Predator.getRender = function(dir) {
         resolve(res);
       });
     });
-  }
+  };
 };
 
 /**

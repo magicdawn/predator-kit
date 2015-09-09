@@ -1,15 +1,17 @@
+'use strict';
+
 /**
  * less
  */
 var co = require('co');
 var less = require('less');
-var Promise = require('bluebird');
+global.Promise = require('bluebird');
 var merge = require('lodash').merge;
 var pathFn = require('path');
 var fs = Promise.promisifyAll(require('fs'));
 less.renderAsync = Promise.promisify(less.render);
 
-exports.renderFileAsync = co.wrap(function * (file, options) {
+exports.renderFileAsync = co.wrap(function*(file, options) {
 
   // set default options
   options = merge({

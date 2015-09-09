@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * util
  *
@@ -11,7 +13,7 @@
 var fs = require('fs');
 var fse = require('fs-extra');
 var path = require('path');
-var Promise = require('bluebird');
+global.Promise = require('bluebird');
 var crypto = require('crypto');
 var escapeRegexp = require('escape-regexp');
 var Browserify = require('browserify');
