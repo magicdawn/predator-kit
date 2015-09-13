@@ -182,7 +182,8 @@ Predator.prototype.startAssetsManager = function() {
   var router = this.router;
   var predator = this;
   var home = this.home;
-  var debug = require('debug')('predator:middleware');
+  var debugLess = require('debug')('predator:less');
+  var debugBrowserify = require('debug')('predator:browserify');
 
   /**
    * img fonts assets
@@ -201,7 +202,7 @@ Predator.prototype.startAssetsManager = function() {
       var appHome = pathFn.join(home, 'app');
       var parsed = pathFn.parse(this.originalPath);
       var lessFile = pathFn.join(appHome, parsed.dir, parsed.name + '.less');
-      debug('css -> less : %s -> %s', this.path, lessFile);
+      debugLess('%s -> %s', this.path, lessFile);
 
       this.type = 'css';
       this.body = yield predator.renderLessAsync(lessFile);
@@ -220,6 +221,8 @@ Predator.prototype.startAssetsManager = function() {
       var appHome = pathFn.join(home, 'app');
       var parsed = pathFn.parse(this.originalPath);
       var jsFile = pathFn.join(appHome, parsed.dir, parsed.name + parsed.ext);
+      debugBrowserify('%s -> %s', this.path, jsFile);
+
       this.type = 'js';
       this.body = predator.createBrowserifyStream(jsFile); // stream
     } else {

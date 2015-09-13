@@ -1,0 +1,12 @@
+{
+  "test/img/predator.jpg": "test/img/predator_75fef8dc.jpg",
+  "test/assets/demo.xls": "test/assets/demo_3a1ac6cb.xls",
+  "global/css/main/base.less": "global/css/main/base_255a08f9.css",
+  "test/css/main/index.less": "test/css/main/index_73cdcdf2.css",
+  "index/js/main/index.js": "index/js/main/index_90d7d6ad.js",
+  "test/js/main/index.js": "test/js/main/index_b92d14d1.js",
+  "global/js/main/index.js": "global/js/main/index_b6edd44f.js",
+  "test/js/index.js": "test/js/index_d3cc3e84.js",
+  "test/js/foo/bar.js": "test/js/foo/bar_d6c57a02.js",
+  "index/css/index.less": "index/css/index_b3dc463b.less"
+}

@@ -22,7 +22,12 @@ exports.renderFileAsync = co.wrap(function*(file, options) {
   var content = yield fs.readFileAsync(file, 'utf8');
 
   // render
-  var output = yield less.renderAsync(content, options);
+  try {
+    var output = yield less.renderAsync(content, options);
+  } catch (e) {
+    e.message = less.formatError(e);
+    throw e;
+  }
 
   // return
   return output.css;
