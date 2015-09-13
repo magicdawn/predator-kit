@@ -30,8 +30,30 @@ describe('use middleware when dev', function() {
     });
   });
 
-  describe('less middleware for css/main/*', function() {
-    // body...
+  describe('css', function() {
+    it('less middleware for */css/main/**/*.css', function(done) {
+      request(app)
+        .get('/test/css/main/index.css')
+        .expect(200, done);
+    });
+
+    it('serve static for other', function(done) {
+      request(app)
+        .get('/test/css/foo/index.less')
+        .expect(200)
+        .end(() => {
+
+          request(app)
+            .get('/test/css/index.css')
+            .expect(200, done);
+        });
+    });
+
+    it('show error message', function(done) {
+      request(app)
+        .get('/test/css/main/error.css')
+        .expect(500, done);
+    });
   });
 
   describe('browserify middleware for js/main/*', function() {

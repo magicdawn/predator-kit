@@ -4,7 +4,7 @@
   "description": "Basic lib for predator style FE project",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "NODE_ENV=test mocha"
   },
   "repository": {
     "type": "git",
