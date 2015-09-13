@@ -5,7 +5,7 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "postinstall": "cd node_modules; ln -sf ../app; ln -sf ../lib"
   },
   "repository": {
