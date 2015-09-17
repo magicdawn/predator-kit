@@ -69,9 +69,17 @@ Predator.prototype.static = function() {
   var root = pathFn.join(this.home, 'app');
 
   return function* predatorStatic(next) {
-    return yield send(this, this.originalPath, {
+
+    // koa-send
+    var filePath = yield send(this, this.originalPath, {
       root: root
     });
+
+    // 304 support
+    if (this.fresh) {
+      this.status = 304;
+      this.body = null;
+    }
   };
 };
 

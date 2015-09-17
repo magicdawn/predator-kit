@@ -15,3 +15,6 @@ build/Release
 node_modules
 .swp
 .DS_Store
+
+test/fixtures/public
+view_build

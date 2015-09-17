@@ -40,12 +40,12 @@ gulp.task('build', function() {
 
     // less -> css
     yield predator.buildLessAsync([
-      '*/css/main/**/*.less'
+      '!(test)/css/main/**/*.less'
     ], rev);
 
     // js
     yield predator.buildJsAsync([
-      '*/js/main/**/*.js',
+      '!(test)/js/main/**/*.js',
       'global/js/main/index.json'
     ], rev);
 
