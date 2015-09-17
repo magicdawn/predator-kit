@@ -42,21 +42,75 @@ describe('use middleware when dev', function() {
         .get('/test/css/foo/index.less')
         .expect(200)
         .end(() => {
-
           request(app)
             .get('/test/css/index.css')
             .expect(200, done);
         });
     });
 
-    it('show error message', function(done) {
+    it('show error message when not production', function(done) {
       request(app)
         .get('/test/css/main/error.css')
-        .expect(500, done);
+        .end((err, res) => {
+
+          // status
+          res.status.should.equal(500);
+
+          // expose error
+          res.text.should.match(/@@import/);
+          res.text.should.match(/ParseError/);
+
+          // console.log(res.text);
+          done();
+        });
     });
   });
 
-  describe('browserify middleware for js/main/*', function() {
-    // body...
+  describe('js', function() {
+
+    it('browserify middleware for /global/js/main/index.json', done => {
+      request(app)
+        .get('/global/js/main/index.js')
+        .expect(200, done);
+    });
+
+    it('browserify middleware for js/main/*', done => {
+      request(app)
+        .get('/test/js/main/index.js')
+        .expect(200, done);
+    });
+
+    it('serve static for other', done => {
+      request(app)
+        .get('/test/js/index.js')
+        .expect(200)
+        .end((err, res) => {
+          if (err) {
+            return done(err);
+          }
+
+          request(app)
+            .get('/test/js/foo/bar.js')
+            .expect(200, done);
+        });
+    });
+
+    it('show error message when not production', done => {
+
+      request(app)
+        .get('/test/js/main/error.js')
+        .end((err, res) => {
+
+          // status
+          res.status.should.equal(500);
+
+          // error
+          // console.log(res.text);
+          res.text.should.match(/cannot find module/i);
+          res.text.should.match(/not-exists/);
+
+          done();
+        });
+    });
   });
 });
