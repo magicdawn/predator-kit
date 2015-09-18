@@ -23,6 +23,22 @@
   "bugs": {
     "url": "https://github.com/magicdawn/predator-kit/issues"
   },
+  "files": [
+    "index.js",
+    "less.js",
+    "build.js",
+    "util.js",
+    "README.md",
+    "package.json",
+    "test/fixtures/app.js",
+    "test/fixtures/index.js",
+    "test/fixtures/package.json",
+    "test/fixtures/README.md",
+    "test/fixtures/Gulpfile.js",
+    "test/fixtures/app/global",
+    "test/fixtures/app/index",
+    "test/fixtures/lib"
+  ],
   "homepage": "https://github.com/magicdawn/predator-kit#readme",
   "devDependencies": {
     "cheerio": "^0.19.0",

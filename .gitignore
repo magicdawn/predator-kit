@@ -16,5 +16,7 @@ node_modules
 .swp
 .DS_Store
 
+# test/fixtures is useful
+# but do not take the build
 test/fixtures/public
 view_build

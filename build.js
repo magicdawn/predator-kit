@@ -227,29 +227,54 @@ exports.buildOtherJsCss = function(globPatterns, rev) {
 
 /**
  * build static html
+ *
+ * 规则是 `/` 结尾, + index.html
+ * / -> /index.html
+ * /foo/ -> /foo/index.html
+ * /bar -> /bar
  */
-exports.buildHtmlAsync = co.wrap(function*(path, options) {
-  if (this._server) {
-    this._server = this.app.listen();
+exports.buildHtmlAsync = co.wrap(function*(paths, options) {
+  var debug = require('debug')('predator:build:html');
+
+  var server = this.app.listen(0);
+  var address = server.address();
+  var serverAddress = 'localhost:' + address.port;
+  debug('server address : %s', serverAddress);
+
+  try {
+    // build all
+    for (var i = 0; i < paths.length; i++) {
+      var path = paths[i];
+
+      var html = yield request
+        .get(serverAddress + path)
+        .promise()
+        .then(function(res) {
+          return res.text;
+        });
+
+      // options
+      var defaults = {};
+      options = _.merge(defaults, options);
+      var html = minify(html, options);
+
+      // dest
+      var dest = this.buildDir + path;
+      if (dest.endsWith('/')) {
+        dest += 'index.html';
+      }
+
+      // debug
+      debug('%s -> %s', path, dest);
+
+      // write
+      fse.outputFileSync(dest, html);
+    }
+  } catch (e) {
+    server.unref();
+    throw e;
   }
 
-  var address = this._server.address();
-  this._serverAddress = address.address + ':' + address.port;
-
-  var html = yield request
-    .get(this._serverAddress + path)
-    .promise()
-    .end();
-
-  // options
-  var defaults = {};
-  options = _.merge(defaults, options);
-  var html = minify(html, options);
-
-  // dest
-  var dest = this.buildDir + path;
-  if (!path.extname(dest)) {
-    dest += 'index.html';
-  }
-  fse.outputFileSync(dest, html);
+  // unref
+  server.unref();
 });

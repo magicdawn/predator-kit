@@ -63,6 +63,15 @@ gulp.task('build', function() {
       '*/view/**/*.*'
     ], rev);
 
+    // 静态化某些页面
+    yield predator.buildHtmlAsync([
+      '/test/',
+      '/test/foo/',
+      '/test/foo/bar/'
+    ], {
+      collapseWhitespace: true
+    });
+
     fs.writeFileSync(__dirname + '/rev.json', JSON.stringify(rev, null, '  '), 'utf8');
     gutil.log('predator', 'rev.json writed');
   });
