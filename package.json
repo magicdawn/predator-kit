@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "NODE_ENV=test mocha",
-    "test-build": "gulp --cwd test/fixtures --gulpfile test/fixtures/Gulpfile.test.js build"
+    "gulp": "gulp --cwd test/fixtures --gulpfile test/fixtures/Gulpfile.test.js"
   },
   "repository": {
     "type": "git",

@@ -2,8 +2,8 @@
 Basic lib for predator style FE project
 
 ## commands
-- test `npm run test`
-- test-build `npm run test-build`
+- test `npm run test` # test
+- gulp `npm run gulp (build | clean)` # clean the  build in the `test` dir
 
 ## yeoman-generator
 see magicdawn/generator-predator
