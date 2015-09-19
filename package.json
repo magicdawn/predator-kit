@@ -1,6 +1,6 @@
 {
   "name": "predator-kit",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "Basic lib for predator style FE project",
   "main": "index.js",
   "scripts": {
