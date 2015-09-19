@@ -75,7 +75,7 @@ Predator.prototype.static = function() {
       root: root
     });
 
-    // 304 support
+    // 304 在 dev 环境下也是更快的
     if (this.fresh) {
       this.status = 304;
       this.body = null;
