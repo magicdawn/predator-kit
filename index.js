@@ -111,8 +111,7 @@ Predator.prototype.renderLessAsync = co.wrap(function*(file) {
 
   if (env === 'production') {
     return yield less.renderFileAsync(file, {
-      paths: paths,
-      compress: true
+      paths: paths
     });
   } else {
     return yield less.renderFileAsync(file, {

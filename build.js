@@ -18,6 +18,7 @@ var UglifyJs = require('uglify-js');
 var request = require('needle-kit').request;
 var minify = require('html-minifier').minify;
 var _ = require('lodash');
+var CleanCss = require('clean-css');
 
 /**
  * 只复制
@@ -79,7 +80,7 @@ exports.buildStatic = function(globPatterns, rev) {
  *
  * 处理less, 替换图片资源等
  */
-exports.buildLessAsync = co.wrap(function*(globPatterns, rev) {
+exports.buildLessAsync = co.wrap(function*(globPatterns, rev, cleanCssOptions) {
   var self = this;
   var cwd = this.home + '/app';
   var debug = require('debug')('predator:build:buildLessAsync');
@@ -97,6 +98,14 @@ exports.buildLessAsync = co.wrap(function*(globPatterns, rev) {
       var src = self.home + '/app/' + f;
       var content = yield self.renderLessAsync(src);
       content = util.processRev(content, rev);
+
+      // minify with default options
+      var cleaner = new CleanCss(_.merge({
+        // none
+      }, cleanCssOptions));
+      content = cleaner.minify(content).styles;
+
+      // compute hash
       var hash = Hash.string(content);
 
       // f是文件, .less
