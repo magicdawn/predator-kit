@@ -111,15 +111,15 @@ Predator.prototype.renderLessAsync = co.wrap(function*(file) {
 
   if (env === 'production') {
     return yield less.renderFileAsync(file, {
-      paths: paths
+      paths: paths,
+      compress: true
     });
   } else {
     return yield less.renderFileAsync(file, {
       sourceMap: {
         sourceMapFileInline: true
       },
-      paths: paths,
-      compress: true
+      paths: paths
     });
   }
 });
