@@ -20,3 +20,4 @@ node_modules
 # but do not take the build
 test/fixtures/public
 view_build
+test/fixtures/rev.json
