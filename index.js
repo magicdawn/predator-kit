@@ -13,6 +13,7 @@ var glob = require('glob');
 var swig = require('swig');
 var browserify = require('browserify');
 var stringify = require('stringify');
+var Router = require('impress-router');
 
 /**
  * set swig view cache
@@ -33,15 +34,15 @@ var less = exports.less = require('./less');
  * options
  *   - home: 主目录
  *   - app: koa app
- *   - router: main router
+ *   - buildDir: build static files
  */
 function Predator(options) {
   if (!(this instanceof Predator)) {
     return new Predator(options);
   }
 
-  if (!options || !options.app || !options.router) {
-    throw new Error('options.app options.router is required');
+  if (!options || !options.app) {
+    throw new Error('options.app is required');
   }
 
   // 主目录
@@ -49,9 +50,6 @@ function Predator(options) {
 
   // app
   this.app = options.app;
-
-  // rouetr
-  this.router = options.router;
 
   // build 目录
   this.buildDir = pathFn.resolve(options.buildDir || './public');
@@ -186,9 +184,14 @@ Predator.prototype.createBrowserifyStream = function(file) {
  * development assets manager
  */
 Predator.prototype.startAssetsManager = function() {
-  var router = this.router;
   var predator = this;
   var home = this.home;
+
+  // router
+  var router = Router();
+  this.app.use(router);
+
+  // debug
   var debugLess = require('debug')('predator:less');
   var debugBrowserify = require('debug')('predator:browserify');
 

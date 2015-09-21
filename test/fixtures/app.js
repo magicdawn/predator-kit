@@ -3,25 +3,27 @@
 global.Promise = require('bluebird');
 var co = require('co');
 var app = module.exports = require('koa')();
-var Router = require('impress-router');
-var router = Router();
-var serve = require('koa-static');
 var _ = require('lodash');
 var debug = require('debug')('predator:demo');
 
-// use router
-app.use(router);
+/**
+ * middlewares
+ */
+var favicon = require('koa-favicon');
+var logger = require('koa-logger');
+var serve = require('koa-static');
+var Predator = require('predator-kit');
 
+// favicon
+// app.use(favicon(__dirname + '/app/global/img/favicon.ico'));
 
+/* globals predator */
 // create predator
-// global.predator = require('../../')({
-global.predator = require('predator-kit')({
+global.predator = Predator({
   home: __dirname,
   app: app,
-  router: router,
   buildDir: __dirname + '/public'
 });
-/* globals predator */
 
 /**
  * when
@@ -46,6 +48,11 @@ if (app.env === 'production') {
   }));
 } else {
   predator.startAssetsManager();
+}
+
+// logger
+if (app.env !== 'test') {
+  app.use(logger());
 }
 
 /**
