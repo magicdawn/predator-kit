@@ -127,7 +127,7 @@ Predator.prototype.renderLessAsync = co.wrap(function*(file) {
 
 Predator.prototype.createBrowserify = function(file) {
   if (!this.jsGlobals) {
-    this.jsGlobals = require(this.home + '/' + 'app/global/js/main/index.json');
+    this.jsGlobals = require(this.home + '/app/global/js/main/index.json');
   }
 
   // when not production, enable source maps
@@ -164,7 +164,7 @@ Predator.prototype.createBrowserify = function(file) {
 
   // commom operation
   b.transform(stringify({
-    extensions: ['.html', '.swig', 'tpl', '.txt']
+    extensions: ['.html', '.swig', '.tpl', '.txt']
   }));
 
   // ret
