@@ -26,6 +26,7 @@
     "impress-router": "^0.2.1",
     "jquery": "^1.11.3",
     "koa": "^1.0.0",
+    "koa-conditional-get": "^1.0.3",
     "koa-favicon": "^1.2.0",
     "koa-logger": "^1.3.0",
     "koa-static": "^1.4.9",

@@ -13,6 +13,7 @@ var favicon = require('koa-favicon');
 var logger = require('koa-logger');
 var serve = require('koa-static');
 var Predator = require('predator-kit');
+var conditional = require('koa-conditional-get');
 
 // favicon
 // app.use(favicon(__dirname + '/app/global/img/favicon.ico'));
@@ -31,18 +32,7 @@ global.predator = Predator({
  *   - otherwise, we load a bunch of middlewares
  */
 if (app.env === 'production') {
-  app.use(function*(next) {
-    // let koa-send do stuff
-    yield * next;
-
-    // then we check
-    if (this.fresh) {
-      this.status = 304;
-      this.body = null;
-    }
-  });
-
-  // koa-send stuff
+  app.use(conditional());
   app.use(serve(predator.buildDir, {
     maxage: 365 * 86400 * 1000
   }));
