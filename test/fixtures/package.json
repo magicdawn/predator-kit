@@ -23,7 +23,7 @@
     "glob": "^5.0.14",
     "gulp": "^3.9.0",
     "gulp-util": "^3.0.6",
-    "impress-router": "^0.1.1",
+    "impress-router": "^0.2.1",
     "jquery": "^1.11.3",
     "koa": "^1.0.0",
     "koa-favicon": "^1.2.0",
