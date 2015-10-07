@@ -4,9 +4,9 @@ node_js:
 # install fixtures deps
 before_install:
   - cd test/fixtures
-  - pwd && npm i
+  - npm i
   - cd node_modules
-  - pwd && ln -sf ../../..
+  - ln -sf ../../..
 script: "npm run test"
 notifications:
   email: false
