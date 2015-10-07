@@ -4,8 +4,10 @@
   "description": "Basic lib for predator style FE project",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test mocha",
-    "gulp": "gulp --cwd test/fixtures --gulpfile test/fixtures/Gulpfile.test.js"
+    "gulp": "gulp --cwd test/fixtures --gulpfile test/fixtures/Gulpfile.test.js",
+    "test:lib": "NODE_ENV=test mocha",
+    "test:build": "npm run gulp build",
+    "test": "npm run test:lib && npm run test:build"
   },
   "repository": {
     "type": "git",
@@ -65,5 +67,8 @@
     "stringify": "^3.1.0",
     "swig": "^1.4.2",
     "uglify-js": "^2.4.24"
+  },
+  "engines": {
+    "node": ">=4"
   }
 }
