@@ -21,6 +21,13 @@ Basic lib for predator style FE project
 ### yeoman-generator
 see https://github.com/magicdawn/generator-predator
 
+### steps
+1. modify files
+2. travis install latest(old) version, use ln to use current modification
+3. manly update package.json version
+4. publish to npm
+5. push to git, trigger travis build
+
 ## API
 
 ### dev
