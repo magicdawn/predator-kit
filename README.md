@@ -1,9 +1,12 @@
 # predator-kit
 Basic lib for predator style FE project
 
-[![Build Status](https://travis-ci.org/magicdawn/predator-kit.svg?branch=master)](https://travis-ci.org/magicdawn/predator-kit)
+[![Build Status](https://travis-ci.org/magicdawn/predator-kit.svg)](https://travis-ci.org/magicdawn/predator-kit)
 ![](https://img.shields.io/npm/v/predator-kit.svg)
 ![](https://img.shields.io/node/v/predator-kit.svg)
+![](https://img.shields.io/npm/dm/predator-kit.svg)
+![](https://img.shields.io/npm/dt/predator-kit.svg)
+![](https://img.shields.io/npm/l/predator-kit.svg)
 
 ## Develop
 
