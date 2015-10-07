@@ -12,7 +12,11 @@ Basic lib for predator style FE project
 
 ### commands
 - `npm run test` # test the predator-kit
+    - `test:lib` for library use-ln
+    - `test:build` the build operation
 - `npm run gulp <task>` # clean the  build in the `test` dir
+- `npm run update-deps` # update demo's package.json to use predator-kit@latest
+- `npm run use-ln` # use `npm link predator-kit` in demo.
 
 ### yeoman-generator
 see https://github.com/magicdawn/generator-predator
