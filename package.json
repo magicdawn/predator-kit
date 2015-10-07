@@ -5,10 +5,11 @@
   "main": "index.js",
   "scripts": {
     "gulp": "./test/fixtures/node_modules/.bin/gulp --cwd test/fixtures --gulpfile test/fixtures/Gulpfile.test.js",
-    "update-deps": "cd test/fixtures; npm i predator-kit@latest --save",
     "test:lib": "NODE_ENV=test mocha",
     "test:build": "npm run gulp build",
-    "test": "npm run test:lib && npm run test:build"
+    "test": "npm run test:lib && npm run test:build",
+    "update-deps": "cd test/fixtures; npm i predator-kit@latest --save",
+    "use-ln": "cd test/fixtures; npm link predator-kit"
   },
   "repository": {
     "type": "git",
