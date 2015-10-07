@@ -1,22 +1,13 @@
 {
-  "name": "predator",
+  "name": "predator-demo",
   "version": "1.0.0",
-  "description": "Awesome, it's predator.",
-  "main": "index.js",
   "private": true,
   "scripts": {
     "test": "mocha",
     "postinstall": "cd node_modules; ln -sf ../app; ln -sf ../lib"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/magicdawn/predator.git"
-  },
-  "author": "magicdawn",
-  "homepage": "https://github.com/magicdawn/predator#readme",
   "dependencies": {
     "bluebird": "^2.9.34",
-    "browserify": "^11.0.1",
     "co": "^4.6.0",
     "debug": "^2.2.0",
     "fs-extra": "^0.24.0",
@@ -32,7 +23,6 @@
     "koa-static": "^1.4.9",
     "less": "^2.5.1",
     "lodash": "^3.10.1",
-    "predator-kit": "^0.2.6",
-    "swig": "^1.4.2"
+    "predator-kit": "@latest"
   }
 }

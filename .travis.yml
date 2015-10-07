@@ -1,13 +1,15 @@
 language: node_js
 node_js:
   - "v4"
-
 # install fixtures deps
 before_install:
-  - cd test/fixtures
+  - cd test/fixtures/node_modules
+  - `pwd`
+  - ln -sf ../../..
+  - `pwd`
+  - cd ../
+  - `pwd`
   - npm i
-  - cd node_modules
-  - ln -sf ../../../../predator-kit predator-kit
 script: "npm run test"
 notifications:
   email: false
