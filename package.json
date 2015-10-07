@@ -4,7 +4,7 @@
   "description": "Basic lib for predator style FE project",
   "main": "index.js",
   "scripts": {
-    "gulp": "gulp --cwd test/fixtures --gulpfile test/fixtures/Gulpfile.test.js",
+    "gulp": "./test/fixtures/node_modules/.bin/gulp --cwd test/fixtures --gulpfile test/fixtures/Gulpfile.test.js",
     "update-deps": "cd test/fixtures; npm i predator-kit@latest --save",
     "test:lib": "NODE_ENV=test mocha",
     "test:build": "npm run gulp build",
