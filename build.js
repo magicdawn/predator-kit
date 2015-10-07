@@ -265,7 +265,12 @@ exports.buildHtmlAsync = co.wrap(function*(paths, options) {
       // options
       var defaults = {};
       options = _.merge(defaults, options);
-      var html = minify(html, options);
+      try {
+        html = minify(html, options);
+      } catch (e) {
+        console.error('minify failed for : %s', path);
+        console.error(e.stack || e);
+      }
 
       // dest
       var dest = this.buildDir + path;
