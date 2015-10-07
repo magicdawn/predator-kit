@@ -4,11 +4,11 @@ node_js:
 # install fixtures deps
 before_install:
   - cd test/fixtures/node_modules
-  - `pwd`
+  - pwd
   - ln -sf ../../..
-  - `pwd`
+  - pwd
   - cd ../
-  - `pwd`
+  - pwd
   - npm i
 script: "npm run test"
 notifications:
