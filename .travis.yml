@@ -6,6 +6,7 @@ before_install:
   - cd test/fixtures
   - npm i
   - cd node_modules
+  - rm -rf predator-kit
   - ln -sf ../../..
 script: "npm run test"
 notifications:
