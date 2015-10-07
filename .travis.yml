@@ -4,9 +4,10 @@ node_js:
 
 # install fixtures deps
 before_install:
-  - cd test/fixtures/
+  - cd test/fixtures
   - npm i
-  - ln ../../../ node_modules/predator-kit
+  - cd node_modules
+  - ln -sf ../../../../predator-kit predator-kit
 script: "npm run test"
 notifications:
   email: false
