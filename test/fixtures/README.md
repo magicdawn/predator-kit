@@ -8,7 +8,7 @@ Yeah, it's predator
 
 文件夹, 能单数, 则单数
 - img/css/js 常用: 缩写 & 单数
-- view 
+- view
 - fonts, 这个是有些css 引用fonts, 在url写的
 - assets, 静态文件
 
@@ -55,5 +55,7 @@ public
 ## 引用方式
 
 - html引用css/js : `/global/js/main/index.js`
-- css互相引用, less render的时候使用了 path= [. , <project_root>/app/]
+- css互相引用,
+    - less render的时候使用了 path= [. , <project_root>/app/]
+    - less使用了 npm import, `@import 'npm://bootstrap';` 可以工作
 - 全站, app lib ,软链接至 node_modules
