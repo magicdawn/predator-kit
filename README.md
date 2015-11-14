@@ -10,32 +10,32 @@ Basic lib for predator style FE project
 
 ## Develop
 
-### commands
-- `npm run test` # test the predator-kit
-    - `test:lib` for library use-ln
-    - `test:build` the build operation
-- `npm run gulp <task>` # clean the  build in the `test` dir
-- `npm run update-deps` # update demo's package.json to use predator-kit@latest
-- `npm run use-ln` # use `npm link predator-kit` in demo.
+|commands| What |
+|---|---|
+|`npm run test` | test the predator-kit |
+|`npm run test:lib` | test as middleware |
+|`npm run test:build`| test as build kit |
+|`npm run gulp <task>` | clean the  build in the `test` dir
+|`npm run update-deps` | update demo's package.json to use predator-kit@latest
+|`npm run use-ln` | use `npm link predator-kit` in demo.
+
+1. 使用 `npm link use-ln` 进行开发
+2. 手动修改版本, kit的版本升级 & demo依赖的kit版本升级
+3. 推送新版本至npm
+4. 推送至GitHub, 触发CI. (4 & 5 不能更换, 因为先触发CI的话, demo下载不到kit新版本, 会失败)
 
 ### yeoman-generator
 see https://github.com/magicdawn/generator-predator
 
-### steps
-1. modify files
-2. travis install latest(old) version, use ln to use current modification
-3. manly update package.json version
-4. publish to npm
-5. push to git, trigger travis build
 
 ## API
 
-### dev
+### as middleware
 
 1. startAssetsManager # start assets manager
 2. loadAllRouter # load all router
 
-### build
+### as build kit
 generally: we got build everything ready
 
 1. buildCopy: just copy
