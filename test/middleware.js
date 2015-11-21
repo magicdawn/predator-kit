@@ -1,7 +1,7 @@
 'use strict';
 
-var request = require('supertest');
-var app = require('./fixtures/app');
+const request = require('supertest');
+let app = require('./fixtures/app');
 require('should');
 
 describe('use middleware when dev', function() {
