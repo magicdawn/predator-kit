@@ -1,19 +1,19 @@
 'use strict';
 
 global.Promise = require('bluebird');
-var co = require('co');
-var app = module.exports = require('koa')();
-var _ = require('lodash');
-var debug = require('debug')('predator:demo');
+const co = require('co');
+const app = module.exports = require('koa')();
+const _ = require('lodash');
+const debug = require('debug')('predator:demo');
 
 /**
  * middlewares
  */
-var favicon = require('koa-favicon');
-var logger = require('koa-logger');
-var serve = require('koa-static');
-var Predator = require('predator-kit');
-var conditional = require('koa-conditional-get');
+const favicon = require('koa-favicon');
+const logger = require('koa-logger');
+const serve = require('koa-static');
+const Predator = require('predator-kit');
+const conditional = require('koa-conditional-get');
 
 // favicon
 // app.use(favicon(__dirname + '/app/global/img/favicon.ico'));

@@ -1,25 +1,25 @@
 'use strict';
 
 global.Promise = require('bluebird');
-var co = require('co');
-var gulp = require('gulp');
-var gutil = require('gulp-util');
-var pathFn = require('path');
-var fs = require('fs-extra');
-var glob = require('glob');
+const co = require('co');
+const gulp = require('gulp');
+const gutil = require('gulp-util');
+const pathFn = require('path');
+const fs = require('fs-extra');
+const glob = require('glob');
 
 /**
  * rev map
  */
-var rev = {};
+const rev = {};
 
 /**
  * build Task
  */
 gulp.task('build', function() {
   process.env.NODE_ENV = 'production';
-  var app = require('./app');
-  var rev = {};
+  const app = require('./app');
+  const rev = {};
 
   /* globals predator */
   // all glob with cwd `app/`
@@ -93,7 +93,7 @@ gulp.task('clean-public', function() {
  * view_build
  */
 gulp.task('clean-view', function() {
-  var dirs = glob.sync('app/*/view_build');
+  const dirs = glob.sync('app/*/view_build');
   dirs.forEach(function(d) {
     fs.removeSync(__dirname + '/' + d);
   });

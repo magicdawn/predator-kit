@@ -1,7 +1,7 @@
 'use strict';
 
-var router = module.exports = require('impress-router')();
-var render = require('predator-kit').getRender(__dirname);
+const router = module.exports = require('impress-router')();
+const render = require('predator-kit').getRender(__dirname);
 
 router.get('/test', function*() {
   this.type = 'html';
@@ -13,5 +13,5 @@ router.get('/test/foo', function*() {
 });
 
 router.get('/test/foo/bar', function*() {
-  this.body = '/test/foo/bar'
+  this.body = '/test/foo/bar';
 });
