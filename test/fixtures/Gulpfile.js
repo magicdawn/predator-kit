@@ -7,6 +7,7 @@ var gutil = require('gulp-util');
 var pathFn = require('path');
 var fs = require('fs-extra');
 var glob = require('glob');
+var browserSync = require('browser-sync').create();
 
 /**
  * rev map
@@ -87,5 +88,22 @@ gulp.task('clean-view', function() {
   var dirs = glob.sync('app/*/view_build');
   dirs.forEach(function(d) {
     fs.removeSync(__dirname + '/' + d);
+  });
+});
+
+/**
+ * Dev
+ */
+gulp.task('browser-sync', function() {
+  browserSync.init({
+    // browser-sync uses anymatch
+    files: [
+      __dirname + '/app/*/css/**/*.css',
+      __dirname + '/app/*/css/**/*.less',
+      __dirname + '/app/*/js/**/*.js',
+      __dirname + '/app/*/view/**/*.swig',
+      __dirname + '/app/*/view/**/*.html'
+    ],
+    proxy: 'localhost:4000'
   });
 });
