@@ -14,6 +14,12 @@ const logger = require('koa-logger');
 const serve = require('koa-static');
 const Predator = require('predator-kit');
 const conditional = require('koa-conditional-get');
+const etag = require('koa-etag');
+
+// cache
+// dev & production
+app.use(conditional());
+app.use(etag());
 
 // favicon
 // app.use(favicon(__dirname + '/app/global/img/favicon.ico'));
@@ -32,7 +38,6 @@ global.predator = Predator({
  *   - otherwise, we load a bunch of middlewares
  */
 if (app.env === 'production') {
-  app.use(conditional());
   app.use(serve(predator.buildDir, {
     maxage: 365 * 86400 * 1000
   }));
