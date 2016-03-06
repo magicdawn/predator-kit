@@ -51,13 +51,10 @@
     "supertest": "^1.2.0"
   },
   "dependencies": {
-    "bluebird": "^2.9.34",
     "browserify": "^11.0.1",
     "clean-css": "^3.4.10",
-    "co": "^4.6.0",
     "debug": "^2.2.0",
     "escape-regexp": "0.0.1",
-    "fs-extra": "^0.26.5",
     "glob": "^7.0.3",
     "html-minifier": "^1.2.0",
     "impress-router": "^0.2.3",
@@ -67,7 +64,7 @@
     "less-plugin-clean-css": "^1.5.1",
     "less-plugin-npm-import": "^2.1.0",
     "lodash": "^4.6.1",
-    "needle-kit": "^0.1.0",
+    "needle-kit": "^1.0.0",
     "stringify": "^5.0.0",
     "swig": "^1.4.2",
     "uglify-js": "^2.6.2"

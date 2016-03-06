@@ -1,7 +1,8 @@
 'use strict';
 
-global.Promise = require('bluebird');
-const co = require('co');
+const kit = require('needle-kit');
+global.Promise = kit.Promise;
+const co = kit.co;
 const app = module.exports = require('koa')();
 const _ = require('lodash');
 const debug = require('debug')('predator:demo');

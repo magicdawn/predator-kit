@@ -1,11 +1,12 @@
 'use strict';
 
-global.Promise = require('bluebird');
-const co = require('co');
+const kit = require('needle-kit');
+global.Promise = kit.Promise;
+const co = kie.co;
+const fs = kit.fs;
 const gulp = require('gulp');
 const gutil = require('gulp-util');
 const pathFn = require('path');
-const fs = require('fs-extra');
 const glob = require('glob');
 const browserSync = require('browser-sync').create();
 
