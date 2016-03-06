@@ -2,7 +2,7 @@
 
 const kit = require('needle-kit');
 global.Promise = kit.Promise;
-const co = kie.co;
+const co = kit.co;
 const fs = kit.fs;
 const gulp = require('gulp');
 const gutil = require('gulp-util');
