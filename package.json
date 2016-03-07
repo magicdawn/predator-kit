@@ -31,7 +31,7 @@
     "lib/",
     "README.md",
     "package.json",
-    "test/fixtures/.eslintrc",
+    "test/fixtures/.eslintrc.yml",
     "test/fixtures/app.js",
     "test/fixtures/index.js",
     "test/fixtures/package.json",
