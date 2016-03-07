@@ -21,7 +21,7 @@
     "less": "^2.6.1",
     "lodash": "^4.6.1",
     "needle-kit": "^1.0.0",
-    "predator-kit": "^0.7.0"
+    "predator-kit": "^0.7.1"
   },
   "devDependencies": {
     "browser-sync": "^2.11.1",
