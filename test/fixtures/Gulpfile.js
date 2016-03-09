@@ -1,9 +1,8 @@
 'use strict';
 
 const kit = require('needle-kit');
-global.Promise = kit.Promise;
-const co = kit.co;
 const fs = kit.fs;
+const co = require('co');
 const gulp = require('gulp');
 const gutil = require('gulp-util');
 const pathFn = require('path');

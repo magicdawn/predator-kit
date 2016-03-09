@@ -1,8 +1,7 @@
 'use strict';
 
 const kit = require('needle-kit');
-global.Promise = kit.Promise;
-const co = kit.co;
+const co = require('co');
 const app = module.exports = require('koa')();
 const _ = require('lodash');
 const debug = require('debug')('predator:demo');
