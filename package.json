@@ -58,7 +58,7 @@
     "escape-regexp": "0.0.1",
     "glob": "^7.0.3",
     "html-minifier": "^1.2.0",
-    "impress-router": "^0.2.4",
+    "impress-router": "^0.2.5",
     "koa-send": "^3.1.1",
     "less": "^2.6.1",
     "less-plugin-autoprefix": "^1.5.1",
