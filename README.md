@@ -8,8 +8,6 @@ Basic lib for predator style FE project
 ![](https://img.shields.io/npm/dt/predator-kit.svg?style=flat-square)
 ![](https://img.shields.io/npm/l/predator-kit.svg?style=flat-square)
 
-[![Travis]()]()
-
 ## Develop
 
 |commands| What |
