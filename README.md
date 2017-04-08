@@ -1,4 +1,6 @@
 # predator-kit
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/magicdawn/predator-kit.svg)](https://greenkeeper.io/)
 Basic lib for predator style FE project
 
 [![Build Status](https://img.shields.io/travis/magicdawn/predator-kit.svg?style=flat-square)](https://travis-ci.org/magicdawn/predator-kit)
